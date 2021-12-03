@@ -1,11 +1,7 @@
-import express, { Request, Response } from "express";
+import express from "express";
+import auth from "./auth";
 const router = express.Router();
 
-router.get("/", (req: Request, res: Response) => {
-  return res.status(200).json({
-    message: "Hello world",
-    status_code: 200,
-  });
-});
+router.use("/auth", auth);
 
 export default router;
