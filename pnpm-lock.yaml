@@ -21,7 +21,6 @@ specifiers:
   typescript: ^4.5.2
 
 dependencies:
-  '@types/nodemailer': 6.4.4
   bcrypt: 5.0.1
   cors: 2.8.5
   dotenv: 10.0.0
@@ -38,6 +37,7 @@ devDependencies:
   '@types/jsonwebtoken': 8.5.6
   '@types/mongoose': 5.11.97
   '@types/node': 16.11.11
+  '@types/nodemailer': 6.4.4
   nodemon: 2.0.15
   ts-node: 10.4.0_68212d3c5f342a0c59715bbaaf1875e7
   typescript: 4.5.2
@@ -187,7 +187,7 @@ packages:
     resolution: {integrity: sha512-Ksw4t7iliXeYGvIQcSIgWQ5BLuC/mljIEbjf615svhZL10PE9t+ei8O9gDaD3FPCasUJn9KTLwz2JFJyiiyuqw==}
     dependencies:
       '@types/node': 16.11.11
-    dev: false
+    dev: true
 
   /@types/qs/6.9.7:
     resolution: {integrity: sha512-FGa1F62FT09qcrueBA6qYTrJPVDzah9a+493+o2PCXsesWHIn27G98TsSMs3WPNbZIEj4+VJf6saSFpvD+3Zsw==}
