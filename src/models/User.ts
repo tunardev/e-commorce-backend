@@ -8,8 +8,8 @@ const UserSchema = new Schema(
     password: { type: String, required: true },
   },
   {
-    timestamps: true,
+    timestamps: true, // timestamps adds createdAt and updatedAt fields
   }
-);
+); // user schema
 
-export default model<User>("User", UserSchema);
+export default model<User>("User", UserSchema); // user schema is now a model and export model

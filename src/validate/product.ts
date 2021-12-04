@@ -1,9 +1,13 @@
 import Joi from "joi";
 
-export const reviewValidate = Joi.object().keys({
+export const createReviewValidate = Joi.object().keys({
   name: Joi.string().required(),
   comment: Joi.string().required(),
-  rating: Joi.number().integer().required(),
+});
+
+export const updateReviewValidate = Joi.object().keys({
+  name: Joi.string(),
+  comment: Joi.string(),
 });
 
 export const createProductValidate = Joi.object().keys({

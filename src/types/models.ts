@@ -9,7 +9,7 @@ export interface User extends Document {
 export interface Review {
   name: string;
   comment: string;
-  rating: number;
+  id: string;
 }
 
 export interface Product extends Document {
@@ -23,3 +23,5 @@ export interface Product extends Document {
   rating: number;
   reviews: Review[];
 }
+
+export interface Order extends Document {}

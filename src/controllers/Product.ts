@@ -1,6 +1,7 @@
 import { Response } from "express";
 import Product from "../models/Product";
 import { RequestUser } from "../types/types";
+import { v4 } from "uuid";
 
 export const getProducts = async (req: RequestUser, res: Response) => {
   try {
@@ -129,13 +130,15 @@ export const createReview = async (req: RequestUser, res: Response) => {
     });
 
   try {
+    const review = { ...req.body, id: v4() };
+
     await Product.updateOne(
       { _id: id, userId: req.user._id },
-      { $push: { reviews: req.body } }
+      { $push: { reviews: review } }
     );
     productData = {
       ...productData,
-      reviews: [...productData.reviews, req.body],
+      reviews: [...productData.reviews, review],
     };
     return res.status(200).json({ data: productData, status_code: 200 });
   } catch (err) {

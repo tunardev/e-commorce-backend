@@ -6,11 +6,12 @@ const reviewSchema = new Schema(
     name: { type: String, required: true },
     comment: { type: String, required: true },
     rating: { type: Number, required: true },
+    id: { type: String, required: true },
   },
   {
-    timestamps: true,
+    timestamps: true, // timestamps adds createdAt and updatedAt fields
   }
-);
+); // review schema
 
 const ProductSchema = new Schema(
   {
@@ -22,11 +23,11 @@ const ProductSchema = new Schema(
     price: { type: Number, required: true },
     countInStock: { type: Number, required: true },
     rating: { type: Number, default: null },
-    reviews: [reviewSchema],
+    reviews: { type: [reviewSchema], default: null },
   },
   {
-    timestamps: true,
+    timestamps: true, // timestamps adds createdAt and updatedAt fields
   }
-);
+); // product schema
 
-export default model<Product>("Product", ProductSchema);
+export default model<Product>("Product", ProductSchema); // product schema is now a model and export model
