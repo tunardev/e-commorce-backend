@@ -10,7 +10,7 @@ export default async (req: RequestUser, res: Response, next: NextFunction) => {
   if (!token)
     return res.status(401).json({ error: "Unauthenticated", status_code: 401 });
 
-  jwt.verify(token, process.env.JWT_SECRET, async (err, data) => {
+  jwt.verify(token, process.env.JWT_SECRET, async (err, data: UserPayload) => {
     if (err)
       return res
         .status(401)

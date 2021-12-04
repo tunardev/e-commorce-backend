@@ -17,7 +17,10 @@ export const redisClient = new ioredis();
 app.use(express.json());
 app.use(morgan("dev"));
 app.use(helmet());
-app.use(cors());
+app.use(cors({
+  credentials: true,
+  origin: '*'
+}));
 app.use("/api/v1", routes);
 app.use("*", (req: Request, res: Response) => {
   return res.status(404).json({ error: "Page not found", status_code: 404 });
