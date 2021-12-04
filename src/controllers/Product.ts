@@ -22,7 +22,7 @@ export const getProduct = async (req: RequestUser, res: Response) => {
   const { id } = req.params;
 
   try {
-    const product = await Product.find({ _id: id });
+    const product = await Product.findOne({ _id: id });
     return res.status(200).json({ data: product, status_code: 200 });
   } catch (err) {
     return res.status(500).json({ error: err.message, status_code: 500 });
@@ -114,3 +114,35 @@ export const deleteProduct = async (req: RequestUser, res: Response) => {
     return res.status(500).json({ error: err.message, status_code: 500 });
   }
 };
+
+export const createReview = async (req: RequestUser, res: Response) => {
+  const { id } = req.params;
+
+  let productData = (await Product.findOne({
+    _id: id,
+    userId: req.user._id,
+  })) as any;
+  if (!productData)
+    return res.status(400).json({
+      error: "Product not found",
+      status_code: 400,
+    });
+
+  try {
+    await Product.updateOne(
+      { _id: id, userId: req.user._id },
+      { $push: { reviews: req.body } }
+    );
+    productData = {
+      ...productData,
+      reviews: [...productData.reviews, req.body],
+    };
+    return res.status(200).json({ data: productData, status_code: 200 });
+  } catch (err) {
+    return res.status(500).json({ error: err.message, status_code: 500 });
+  }
+};
+
+export const updateReview = (req: RequestUser, res: Response) => {};
+
+export const deleteReview = (req: RequestUser, res: Response) => {};
