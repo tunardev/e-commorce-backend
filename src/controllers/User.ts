@@ -3,6 +3,7 @@ import { UserPayload } from "../types/types";
 import User from "../models/User";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
+import * as redis from "../utils/redis";
 
 export const login = async (req: Request, res: Response) => {
   const { username, email, password } = req.body;
@@ -85,7 +86,7 @@ export const me = async (req: Request, res: Response) => {
   return res.status(200).json({ data: userData, status_code: 200 });
 };
 
-export const forgotPassword = (req: Request, res: Response) => {
+export const forgotPassword = async (req: Request, res: Response) => {
   return res.status(200).json({});
 };
 

@@ -4,12 +4,14 @@ import routes from "./routes";
 import helmet from "helmet";
 import dotenv from "dotenv";
 import cors from "cors";
+import ioredis from "ioredis";
 dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 8080;
 
 mongoose.connect(process.env.MONGODB_URL).catch((err) => console.error(err));
+export const redisClient = new ioredis();
 
 app.use(express.json());
 app.use(helmet());
