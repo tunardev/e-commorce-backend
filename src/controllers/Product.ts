@@ -145,4 +145,33 @@ export const createReview = async (req: RequestUser, res: Response) => {
 
 export const updateReview = (req: RequestUser, res: Response) => {};
 
-export const deleteReview = (req: RequestUser, res: Response) => {};
+export const deleteReview = async (req: RequestUser, res: Response) => {
+  const { id } = req.params;
+
+  let productData = (await Product.findOne({
+    _id: id,
+    userId: req.user._id,
+  })) as any;
+  if (!productData)
+    return res.status(400).json({
+      error: "Product not found",
+      status_code: 400,
+    });
+
+  try {
+    const reviews = productData.reviews.filter(
+      (review) => review.id !== req.params.reviewId
+    );
+
+    if (reviews.length <= 0)
+      res.status(400).json({ error: "review not found", status_code: 400 });
+
+    await Product.updateOne(
+      { _id: id, userId: req.user._id },
+      { $set: { reviews: reviews } }
+    );
+    return res.status(200).json({ data: true, status_code: 200 });
+  } catch (err) {
+    return res.status(500).json({ error: err.message, status_code: 500 });
+  }
+};
