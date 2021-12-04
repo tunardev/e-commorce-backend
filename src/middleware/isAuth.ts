@@ -24,6 +24,8 @@ export default async (req: RequestUser, res: Response, next: NextFunction) => {
   if (!userData)
     return res.status(400).json({ error: "User not found", status_code: 400 });
 
+  delete userData.password;
+  delete userData.__v;
   req.user = userData;
   next();
 };
