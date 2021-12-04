@@ -31,4 +31,3 @@ app.use("*", (req: Request, res: Response) => {
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`); // requests are being listened to
 });
-// end of file 

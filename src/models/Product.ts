@@ -22,7 +22,6 @@ const ProductSchema = new Schema(
     description: { type: String, required: true },
     price: { type: Number, required: true },
     countInStock: { type: Number, required: true },
-    rating: { type: Number, default: null },
     reviews: { type: [reviewSchema], default: null },
   },
   {
