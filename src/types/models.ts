@@ -5,3 +5,7 @@ export interface User extends Document {
   password: string;
   email: string;
 }
+
+export interface Product extends Document {
+  
+}

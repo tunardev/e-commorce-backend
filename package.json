@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon --exec ts-node src/server.ts",
     "start": "ts-node src/server.ts",
-    "tsc": "tsc src/server.ts"
+    "tsc": "tsc"
   },
   "keywords": [],
   "author": "Tunar",

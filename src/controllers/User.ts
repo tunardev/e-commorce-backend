@@ -3,7 +3,8 @@ import { UserPayload } from "../types/types";
 import User from "../models/User";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
-import * as redis from "../utils/redis";
+import { v4 } from "uuid";
+import * as redis from "../utils/cache";
 
 export const login = async (req: Request, res: Response) => {
   const { username, email, password } = req.body;
@@ -25,7 +26,7 @@ export const login = async (req: Request, res: Response) => {
   delete userData.__v;
   return res.status(200).json({
     data: {
-      ...userData,
+      user: userData,
       token,
     },
     status_code: 200,
@@ -51,8 +52,7 @@ export const register = async (req: Request, res: Response) => {
       return res.status(200).json({
         data: {
           token,
-          username: userData.username,
-          email: userData.email,
+          user: userData,
         },
         status_code: 200,
       });
@@ -87,9 +87,39 @@ export const me = async (req: Request, res: Response) => {
 };
 
 export const forgotPassword = async (req: Request, res: Response) => {
-  return res.status(200).json({});
+  const { email } = req.body;
+
+  const userData = await User.findOne({ email });
+  if (!userData)
+    return res.status(400).json({ error: "User not found", status_code: 400 });
+
+  const token = v4();
+  await redis.set(token, userData._id, "ex", 1000 * 60 * 60 * 24 * 3);
+
+  //await sendEmail(userData.email, "")
+  return res.status(200).json({ success: true, status_code: 200 });
 };
 
-export const changePassword = (req: Request, res: Response) => {
-  return res.status(200).json({});
+export const changePassword = async (req: Request, res: Response) => {
+  const { token } = req.params;
+  const { password } = req.body;
+
+  const userId = await redis.get(token);
+  if (!userId)
+    return res.status(400).json({ error: "token expired", status_code: 400 });
+
+  const userData = await User.findById(userId);
+  if (!userData)
+    return res
+      .status(400)
+      .json({ error: "user no longer exists", status_code: 400 });
+
+  const salt = await bcrypt.genSalt(10);
+  const hashPassword = await bcrypt.hash(password, salt);
+
+  await User.findByIdAndUpdate(userId, { $set: { password: hashPassword } });
+  await redis.del(token);
+
+  const jwtToken = jwt.sign({ id: userId }, process.env.JWT_SECRET);
+  return res.status(200).json({ data: { token: jwtToken }, status_code: 200 });
 };

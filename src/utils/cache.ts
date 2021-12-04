@@ -1,8 +1,8 @@
 import { redisClient as client } from "../server";
 
-export const set = async (key: string, value: string) => {
+export const set = async (key: string, value: string, expiryMode: string, time: number) => {
   try {
-    const data = await client.set(key, value);
+    const data = await client.set(key, value, expiryMode, time);
     return data;
   } catch (err) {
     throw err;
