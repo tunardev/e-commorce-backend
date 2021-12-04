@@ -1,4 +1,5 @@
 import express, { Request, Response } from "express";
+import compression from "compression";
 import mongoose from "mongoose";
 import routes from "./routes";
 import helmet from "helmet";
@@ -17,6 +18,7 @@ export const redisClient = new ioredis();
 
 // middlewares
 app.use(express.json());
+app.use(compression())
 app.use(morgan("dev"));
 app.use(helmet());
 app.use(
