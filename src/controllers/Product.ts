@@ -1,6 +1,5 @@
 import { Response } from "express";
 import Product from "../models/Product";
-import { RequestUser } from "../types/types";
 import { v4 } from "uuid";
 
 export const getProducts = async (req: RequestUser, res: Response) => {

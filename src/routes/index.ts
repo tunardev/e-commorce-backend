@@ -6,6 +6,6 @@ const router = express.Router();
 
 router.use("/auth", auth); // auth routes
 router.use("/product", product); // product routes
-router.use("/order", order);
+router.use("/order", order); /// order routes
 
 export default router; // export routes

@@ -1,6 +1,6 @@
 import { Response, NextFunction } from "express";
 import User from "../models/User";
-import { RequestUser, UserPayload } from "../types/types";
+import { UserPayload } from "../types/types";
 import jwt from "jsonwebtoken";
 
 export default async (req: RequestUser, res: Response, next: NextFunction) => {
@@ -23,8 +23,6 @@ export default async (req: RequestUser, res: Response, next: NextFunction) => {
         .status(400)
         .json({ error: "User not found", status_code: 400 });
 
-    delete userData.password;
-    delete userData.__v;
     req.user = userData;
     next();
   });

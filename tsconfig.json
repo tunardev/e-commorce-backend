@@ -15,6 +15,6 @@
     "jsx": "preserve",
     "typeRoots": ["node_modules/@types"],
   },
-  "include": ["src", "config"],
+  "include": ["src", "config", "src/server.ts"],
   "exclude": []
 }
