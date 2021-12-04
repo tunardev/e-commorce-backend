@@ -8,7 +8,6 @@ export const getProducts = async (req: RequestUser, res: Response) => {
     const array = [];
 
     products.forEach((product) => {
-      delete product.__v;
       array.push(product);
     });
 
@@ -49,7 +48,6 @@ export const createProduct = async (req: RequestUser, res: Response) => {
 
   try {
     await newProduct.save();
-    delete newProduct.__v;
     return res.status(200).json({ data: newProduct, status_code: 200 });
   } catch (err) {
     return res.status(500).json({ error: err.message, status_code: 500 });

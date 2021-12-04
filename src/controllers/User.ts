@@ -23,9 +23,6 @@ export const login = async (req: Request, res: Response) => {
     expiresIn: "30d",
   });
 
-  delete userData.password;
-  delete userData._id;
-  delete userData.__v;
   return res.status(200).json({
     data: {
       user: userData,
@@ -50,9 +47,6 @@ export const register = async (req: Request, res: Response) => {
         expiresIn: "30d",
       });
 
-      delete userData.password;
-      delete userData._id;
-      delete userData.__v;
       return res.status(200).json({
         data: {
           token,
@@ -84,9 +78,6 @@ export const me = async (req: Request, res: Response) => {
   if (!userData)
     return res.status(400).json({ error: "User not found", status_code: 400 });
 
-  delete userData.password;
-  delete userData._id;
-  delete userData.__v;
   return res.status(200).json({ data: userData, status_code: 200 });
 };
 
