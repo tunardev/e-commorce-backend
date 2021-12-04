@@ -19,7 +19,9 @@ export const login = async (req: Request, res: Response) => {
       .status(400)
       .json({ error: "Password is incorrect", status_code: 400 });
 
-  const token = jwt.sign({ id: userData._id }, process.env.JWT_SECRET);
+  const token = jwt.sign({ id: userData._id }, process.env.JWT_SECRET, {
+    expiresIn: "30d",
+  });
 
   delete userData.password;
   delete userData._id;
@@ -44,7 +46,9 @@ export const register = async (req: Request, res: Response) => {
       if (err)
         return res.status(500).json({ error: err.message, status_code: 500 });
 
-      const token = jwt.sign({ id: userData._id }, process.env.JWT_SECRET);
+      const token = jwt.sign({ id: userData._id }, process.env.JWT_SECRET, {
+        expiresIn: "30d",
+      });
 
       delete userData.password;
       delete userData._id;
@@ -120,6 +124,8 @@ export const changePassword = async (req: Request, res: Response) => {
   await User.findByIdAndUpdate(userId, { $set: { password: hashPassword } });
   await redis.del(token);
 
-  const jwtToken = jwt.sign({ id: userId }, process.env.JWT_SECRET);
+  const jwtToken = jwt.sign({ id: userId }, process.env.JWT_SECRET, {
+    expiresIn: "30d",
+  });
   return res.status(200).json({ data: { token: jwtToken }, status_code: 200 });
 };

@@ -10,22 +10,22 @@ export default async (req: RequestUser, res: Response, next: NextFunction) => {
   if (!token)
     return res.status(401).json({ error: "Unauthenticated", status_code: 401 });
 
-  let data;
-  try {
-    data = jwt.verify(token, process.env.JWT_SECRET) as UserPayload;
+  jwt.verify(token, process.env.JWT_SECRET, async (err, data) => {
+    if (err)
+      return res
+        .status(401)
+        .json({ error: "Unauthenticated", status_code: 401 });
+
+    const { id } = data;
+    const userData = await User.findById(id);
+    if (!userData)
+      return res
+        .status(400)
+        .json({ error: "User not found", status_code: 400 });
+
+    delete userData.password;
+    delete userData.__v;
+    req.user = userData;
     next();
-  } catch {
-    return res.status(401).json({ error: "Unauthenticated", status_code: 401 });
-  }
-
-  const { id } = data;
-  const userData = await User.findById(id);
-
-  if (!userData)
-    return res.status(400).json({ error: "User not found", status_code: 400 });
-
-  delete userData.password;
-  delete userData.__v;
-  req.user = userData;
-  next();
+  });
 };
