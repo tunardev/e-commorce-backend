@@ -6,8 +6,9 @@
   "scripts": {
     "dev": "nodemon --exec ts-node src/server.ts",
     "start": "ts-node src/server.ts",
-    "tsc": "tsc",
-    "build": "npm run tsc && node src/server.js"
+    "build": "tsc",
+    "serve": "npm run tsc && node src/server.js",
+    "run": "node src/server.js"
   },
   "keywords": [],
   "author": "Tunar",
