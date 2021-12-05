@@ -18,7 +18,7 @@ export const redisClient = new ioredis();
 
 // middlewares
 app.use(express.json());
-app.use(compression())
+app.use(compression());
 app.use(morgan("dev"));
 app.use(helmet());
 app.use(
