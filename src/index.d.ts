@@ -1,4 +1,5 @@
 import { Request } from "express";
+import { User } from "./types/models";
 
 declare namespace NodeJS {
   interface ProcessEnv {
@@ -12,6 +13,6 @@ declare namespace NodeJS {
 
 declare global {
   interface RequestUser extends Request {
-    user: any;
+    user: User;
   }
 }
