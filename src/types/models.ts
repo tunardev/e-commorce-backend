@@ -20,7 +20,6 @@ export interface Product extends Document {
   description: string;
   price: number;
   countInStock: number;
-  rating: number;
   reviews: Review[];
 }
 
